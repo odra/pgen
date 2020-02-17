@@ -9,7 +9,6 @@ const SPECIAL: [char; 32] = ['!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', 
 #[derive(Debug)]
 pub struct Options {
     pub size: usize,
-    pub letters: bool,
     pub digits: bool,
     pub special: bool
 }
@@ -18,7 +17,6 @@ impl Default for Options {
     fn default() -> Self {
         Options {
             size: 8,
-            letters: true,
             digits: true,
             special: true
         }
@@ -28,9 +26,7 @@ impl Default for Options {
 pub fn gen(opt: Options) -> String {
     let mut input: Vec<char> = Vec::new();
     //letters
-    if opt.letters {
-        input.extend(Vec::from_iter(LETTERS.iter()));
-    }
+    input.extend(Vec::from_iter(LETTERS.iter()));
     //digits
     if opt.digits {
         input.extend(Vec::from_iter(DIGITS.iter()));
@@ -45,8 +41,7 @@ pub fn gen(opt: Options) -> String {
         .choose_multiple(&mut rand::thread_rng(), opt.size)
         .collect();
 
-    let s: String = output.into_iter().collect();
-    s
+    String::from_iter(output.into_iter())
 }
 
 #[cfg(test)]
@@ -64,7 +59,6 @@ mod test {
     fn test_no_digits() {
         let opt = Options {
             size: 8,
-            letters: true,
             digits: false,
             special: true
         };
